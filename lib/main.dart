@@ -10,7 +10,8 @@ void main() async {
     supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/translations', // <-- change the path of the translation files 
       fallbackLocale: Locale('en'),
-    child: ToDoApp()
+    child: ToDoApp(),
     )
   );
 }
+
