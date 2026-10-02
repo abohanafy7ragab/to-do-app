@@ -10,9 +10,10 @@ class CreateProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -26,26 +27,57 @@ class CreateProfileScreen extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 80,
                   backgroundColor: Colors.grey.shade400,
-                  child:MyBottomSheet.photo== null? Icon(Icons.person, size: 80):Image.file(File(MyBottomSheet.photo?.path??"")),
+                  child: MyBottomSheet.photo == null
+                      ? Icon(Icons.person, size: 80)
+                      : Image.file(File(MyBottomSheet.photo?.path ?? "")),
                 ),
               ),
-              Text("create your profile",style: TextStyle(fontSize: 27,
-              fontWeight:FontWeight(600) ),),
-              Text("add your name and your profile picture",style: TextStyle(fontSize: 15,
-              fontWeight:FontWeight(600) ),),
+              Text(
+                "create your profile",
+                style: TextStyle(fontSize: 27, fontWeight: FontWeight(600)),
+              ),
+              Text(
+                "add your name and your profile picture",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight(600)),
+              ),
+              10.verticalSpace,
               Align(
                 alignment: Alignment.topLeft,
-                child: Text("fullname",style: TextStyle(fontSize: 15,
-                fontWeight:FontWeight(600) ),),
+                child: Text(
+                  "fullname",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight(600)),
+                ),
               ),
+              10.verticalSpace,
               TextFormField(
+                onTapOutside: (event) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.r),
                   ),
-          
                 ),
-              )
+              ),
+              30.verticalSpace,
+              Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.indigoAccent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    "continue",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight(600),
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
