@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_app/fetures/creating_profile/create_profile_screen.dart';
 
 class ToDoApp extends StatelessWidget {
-  const new({super.key});
+  const ToDoApp({super.key});
 
   @override
   Widget build(BuildContext context) {

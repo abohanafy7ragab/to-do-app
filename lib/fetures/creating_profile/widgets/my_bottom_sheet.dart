@@ -3,26 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:to_do_app/fetures/creating_profile/widgets/main_bottom.dart';
 
-class MyBottomSheet extends StatefulWidget {
-  new({super.key});
+class MyBottomSheet extends StatelessWidget {
+  final VoidCallback onTap1;
+  final VoidCallback onTap2;
+  const MyBottomSheet({super.key,required this.onTap1,required this.onTap2});
   static XFile? photo;
-  @override
-  State<MyBottomSheet> createState() => _MyBottomSheetState();
-}
-
-class _MyBottomSheetState extends State<MyBottomSheet> {
-  final picker = ImagePicker();
-   
-  pickeImagefromCamera() async {
-    MyBottomSheet.photo = await picker.pickImage(source: ImageSource.camera);
-    setState(() {});
-  }
-
-  pickeImagefromGallery() async {
-    MyBottomSheet.photo = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {});
-  }
-
+  // void pickeImagefromCamera() async {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,18 +18,12 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
         children: [
           MainBottom(
             title: "camera",
-            onTap: () {
-              Navigator.pop(context);
-              pickeImagefromCamera();
-            },
+            onTap: onTap1
           ),
           25.verticalSpace,
           MainBottom(
-            title: "gallry",
-            onTap: () {
-              Navigator.pop(context);
-              pickeImagefromGallery();
-            },
+            title: "gallery",
+            onTap:onTap2,
           ),
         ],
       ),

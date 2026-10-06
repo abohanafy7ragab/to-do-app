@@ -2,10 +2,37 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:to_do_app/fetures/creating_profile/widgets/main_bottom.dart';
 import 'package:to_do_app/fetures/creating_profile/widgets/my_bottom_sheet.dart';
+import 'package:to_do_app/fetures/home/home_screen.dart';
 
-class CreateProfileScreen extends StatelessWidget {
-  const new({super.key});
+class CreateProfileScreen extends StatefulWidget {
+  const CreateProfileScreen({super.key});
+
+  @override
+  State<CreateProfileScreen> createState() => _CreateProfileScreenState();
+}
+
+class _CreateProfileScreenState extends State<CreateProfileScreen> {
+  final picker = ImagePicker();
+  void pickeImagefromCamera() async {
+    MyBottomSheet.photo = await picker.pickImage(source: ImageSource.camera);
+    setState(() {});
+  }
+
+  void pickeImagefromGallery() async {
+    MyBottomSheet.photo = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {});
+  }
+  void onTap1() {
+    Navigator.pop(context);
+    pickeImagefromCamera();
+  }
+  void onTap2() {
+    Navigator.pop(context);
+    pickeImagefromGallery();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +44,32 @@ class CreateProfileScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              ////////////////////////////////////////////
               InkWell(
                 onTap: () {
                   showModalBottomSheet(
                     context: context,
-                    builder: (context) => MyBottomSheet(),
+                    builder: (context) => MyBottomSheet(
+                      onTap1: onTap1,
+                      onTap2: onTap2,
+                    ),
                   );
                 },
                 child: CircleAvatar(
                   radius: 80,
-                  backgroundColor: Colors.grey.shade400,
+                  backgroundColor: MyBottomSheet.photo == null
+                      ? Colors.grey.shade400
+                      : null,
+
+                  backgroundImage: MyBottomSheet.photo == null
+                      ? Image.file(File(MyBottomSheet.photo?.path ?? "")).image
+                      : null,
                   child: MyBottomSheet.photo == null
                       ? Icon(Icons.person, size: 80)
-                      : Image.file(File(MyBottomSheet.photo?.path ?? "")),
+                      : null,
                 ),
               ),
+              ///////////////////////////////////////////////////
               Text(
                 "create your profile",
                 style: TextStyle(fontSize: 27, fontWeight: FontWeight(600)),
@@ -45,7 +83,10 @@ class CreateProfileScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "fullname",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight(600)),
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight(600),
+                  ),
                 ),
               ),
               10.verticalSpace,
@@ -60,24 +101,14 @@ class CreateProfileScreen extends StatelessWidget {
                 ),
               ),
               30.verticalSpace,
-              Container(
-                height: 60,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.indigoAccent,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    "continue",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight(600),
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+              MainBottom(
+                title: "continuee",
+                 onTap: (){
+                  Navigator.pushReplacement(context,
+                   MaterialPageRoute(builder: (context)
+                   =>HomeScreen()));
+                 }
+              )
             ],
           ),
         ),

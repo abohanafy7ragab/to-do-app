@@ -1,19 +1,8 @@
 # to_do_app
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 # create profile screen 
 <img width="887" height="1875" alt="image" src="https://github.com/user-attachments/assets/5c97c728-59ad-445c-baf0-2537541463fd" />
+# home screen
+<img width="792" height="1675" alt="image" src="https://github.com/user-attachments/assets/1dcf80fd-b37a-4316-b6d6-14f1afeaeb6f" />
+# add task screen 
+<img width="792" height="1675" alt="image" src="https://github.com/user-attachments/assets/b9f37303-7eb3-4ef9-bf9f-2e7896349706" />
