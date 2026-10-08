@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_ce/hive.dart';
+import 'package:to_do_app/core/models/app_constants.dart';
 import 'package:to_do_app/core/models/task_model.dart';
-import 'package:to_do_app/core/task_colors.dart';
 import 'package:to_do_app/fetures/add_task/add_task_screen.dart';
 import 'package:to_do_app/fetures/home/widgets/profile_view.dart';
 import 'package:to_do_app/fetures/home/widgets/task_box.dart';
 import 'package:to_do_app/fetures/home/widgets/tasks_number.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +23,7 @@ class HomeScreen extends StatelessWidget {
       // bottomNavigationBar: BottomNavigationBar(items: items),
       body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Stack(
             children: [
               Column(
@@ -38,43 +44,62 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   16.verticalSpace,
-                  TaskBox(task: tasks[0])
+                  Expanded(
+                    
+                    child: ListView.separated(itemBuilder: (context,index)=>
+                    TaskBox(task: tasks[index]),
+                    separatorBuilder:(context, index) => 10.verticalSpace,
+                    itemCount: tasks.length,
+                    ),
+                    
+                  )
+                  // for(int i=0;i<tasks.length;i++)
+                  // Column(
+                  //   children: [
+                  //     TaskBox(task: tasks[i]),
+                  //     10.verticalSpace
+                  //   ],
+                  // )
                 ],
               ),
               Positioned(
-                right: 15.w,
-                bottom: 30.h,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: 
-                      (context)=>AddTaskScreen()
-                      )
-                    );
-                  },
-                  child: Container(
-                    width: 100.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color.fromARGB(255, 160, 194, 254)
+                  right: 15.w,
+                  bottom: 30.h,
+                  child: InkWell(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  AddTaskScreen()),
+                      );
+                      if (!mounted) return;
+                      setState(() {
+                        tasks = Hive.box<TaskModel>(AppConstants.taskBox).values.toList();
+                      });
+                    },
+                    child: Container(
+                      width: 100.w,
+                      height: 50.h,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: const Color.fromARGB(255, 160, 194, 254)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            "task",
+                            style: TextStyle(
+                                fontSize: 17.sp,
+                                fontWeight: FontWeight(600),
+                                color: Colors.black45),
+                          )
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.add,color: Colors.black,),
-                        Text("task",style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight(600),
-                          color: Colors.black45
-                        ),)
-                      ],
-                    ),
-                  ),
-                )
-              )
+                  ))
             ],
           ),
         ),
@@ -83,11 +108,5 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-List<TaskModel> tasks =[
-  TaskModel(
-  title: "flutter UI",
-  description: "Buld register screen",
-  status: "pending",
-  color:TaskColors.blue
-  )
-];
+List<TaskModel> tasks =
+    Hive.box<TaskModel>(AppConstants.taskBox).values.toList();

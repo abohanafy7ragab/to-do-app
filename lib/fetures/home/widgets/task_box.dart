@@ -18,7 +18,7 @@ class TaskBox extends StatelessWidget {
                   : task.color == Colors.purple
                       ? TaskColors.lPurple
                       : TaskColors.lTeal;
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(

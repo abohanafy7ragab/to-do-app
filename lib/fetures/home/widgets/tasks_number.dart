@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:to_do_app/fetures/home/home_screen.dart';
 
 class TasksNumber extends StatelessWidget {
-  const TasksNumber({super.key});
-
+  TasksNumber({super.key});
+  int doneTasks = tasks.fold<int>(0,(count,task)=>
+                 task.status=="done"?count+1:count);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +24,7 @@ class TasksNumber extends StatelessWidget {
           Column(
             children: [
               20.verticalSpace,
-              Text("12",style: TextStyle(
+              Text("${tasks.length}",style: TextStyle(
                 fontSize: 29,
                 fontWeight: FontWeight(600),
                 color: Colors.white
@@ -37,7 +39,7 @@ class TasksNumber extends StatelessWidget {
           Column(
             children: [
               20.verticalSpace,
-              Text("7",style: TextStyle(
+              Text("${doneTasks}",style: TextStyle(
                 fontSize: 29,
                 fontWeight: FontWeight(600),
                 color: Colors.white
@@ -52,7 +54,7 @@ class TasksNumber extends StatelessWidget {
           Column(
             children: [
               20.verticalSpace,
-              Text("5",style: TextStyle(
+              Text("${tasks.length-doneTasks}",style: TextStyle(
                 fontSize: 29,
                 fontWeight: FontWeight(600),
                 color: Colors.white

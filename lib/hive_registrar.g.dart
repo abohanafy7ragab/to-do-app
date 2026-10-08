@@ -4,15 +4,18 @@
 
 import 'package:hive_ce/hive_ce.dart';
 import 'package:to_do_app/core/models/task_model.dart';
+import 'package:to_do_app/core/models/user_model.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
     registerAdapter(TaskModelAdapter());
+    registerAdapter(UserModelAdapter());
   }
 }
 
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
     registerAdapter(TaskModelAdapter());
+    registerAdapter(UserModelAdapter());
   }
 }
